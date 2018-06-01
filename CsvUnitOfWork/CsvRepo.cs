@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using StandardInterfaces;
 
-namespace Stocks.Data.Csv
+namespace CsvUnitOfWork
 {
     public class CsvRepo<TEntity> : IRepository<TEntity> where TEntity : class
     {

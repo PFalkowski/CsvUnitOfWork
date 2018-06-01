@@ -1,3 +1,5 @@
+using CsvUnitOfWork;
+using CsvUnitOfWork.Model;
 using System;
 using Stocks.Data.Csv.Test.Mocks;
 using System.Collections.Generic;

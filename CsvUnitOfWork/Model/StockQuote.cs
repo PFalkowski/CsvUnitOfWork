@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using StandardInterfaces;
 
-namespace Stocks.Data.Model
+namespace CsvUnitOfWork.Model
 {
     public sealed class StockQuote : IValidatable, IValueEquatable<StockQuote>
     {

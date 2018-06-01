@@ -2,7 +2,7 @@
 using System.Linq;
 using StandardInterfaces;
 
-namespace Stocks.Data.Model
+namespace CsvUnitOfWork.Model
 {
     public sealed class Company : IValidatable
     {

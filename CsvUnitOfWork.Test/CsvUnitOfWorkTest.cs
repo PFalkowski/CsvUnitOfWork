@@ -1,17 +1,19 @@
-﻿using CsvUnitOfWork;
-using CsvUnitOfWork.Model;
+﻿using CsvUnitOfWork.Model;
+using Stocks.Data.Csv.Test.Mocks;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using Xunit;
 
-namespace Stocks.Data.Csv.Test.Mocks
+namespace CsvUnitOfWork.Test
 {
-    public class CsvContextTest
+    public class CsvUnitOfWorkTest
     {
         [Theory]
         [ClassData(typeof(_11BitMock))]
-        public void AddStock(Company company)
+        public void UnitOfWorkCommitsChanges(Company company)
         {
             // Arrange
 
@@ -19,17 +21,20 @@ namespace Stocks.Data.Csv.Test.Mocks
             var outputFile = new FileInfo(Path.ChangeExtension(fileName, "csv"));
             CsvContext<StockQuote> csvContext = null;
             CsvRepo<StockQuote> repository = null;
+            CsvUnitOfWork<StockQuote> tested = null;
             try
             {
                 csvContext = new StockCsvContext(outputFile) { Culture = CultureInfo.InvariantCulture };
                 repository = new CsvRepo<StockQuote>(csvContext);
+                tested = new CsvUnitOfWork<StockQuote>(csvContext);
 
                 // Act
 
-                repository.AddRange(company.Quotes);
-                csvContext.SaveChanges();
+                tested.Repo.AddRange(company.Quotes);
+                tested.Complete();
 
                 var received = File.ReadAllText(outputFile.FullName);
+
                 // Assert
 
                 var actual = received.Split(Environment.NewLine).Length;
@@ -38,6 +43,7 @@ namespace Stocks.Data.Csv.Test.Mocks
             }
             finally
             {
+                tested?.Dispose();
                 repository?.Dispose();
                 outputFile.Delete();
             }

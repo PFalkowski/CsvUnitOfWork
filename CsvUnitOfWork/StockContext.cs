@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using CsvHelper.Configuration;
-using Stocks.Data.Model;
+﻿using System.IO;
+using CsvUnitOfWork.Model;
 
-namespace Stocks.Data.Csv
+namespace CsvUnitOfWork
 {
     public class StockCsvContext : CsvContext<StockQuote>
     {

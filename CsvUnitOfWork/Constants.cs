@@ -1,4 +1,4 @@
-﻿namespace Stocks.Data.Infrastructure
+﻿namespace CsvUnitOfWork
 {
     public static class Constants
     {

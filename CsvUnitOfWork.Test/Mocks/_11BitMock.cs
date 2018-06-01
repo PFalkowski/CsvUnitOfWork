@@ -1,9 +1,10 @@
-﻿using System;
+﻿using CsvUnitOfWork;
+using CsvUnitOfWork.Model;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using Extensions.Serialization;
-using Stocks.Data.Model;
 using Xunit;
 
 namespace Stocks.Data.Csv.Test.Mocks

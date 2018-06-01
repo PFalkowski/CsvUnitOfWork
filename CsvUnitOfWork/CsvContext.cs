@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Threading;
 using CsvHelper;
 using CsvHelper.Configuration;
 
-namespace Stocks.Data.Csv
+namespace CsvUnitOfWork
 {
     public class CsvContext<TEntity> where TEntity : class
     {
