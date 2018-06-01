@@ -48,5 +48,45 @@ namespace CsvUnitOfWork.Test
                 outputFile.Delete();
             }
         }
+        [Theory]
+        [ClassData(typeof(_11BitMock))]
+        public void UnitOfWorkDoesNotCommitChangesWhenNotSupposedTo(Company company)
+        {
+            // Arrange
+
+            var fileName = Path.GetRandomFileName();
+            var outputFile = new FileInfo(Path.ChangeExtension(fileName, "csv"));
+            CsvContext<StockQuote> csvContext = null;
+            CsvRepo<StockQuote> repository = null;
+            CsvUnitOfWork<StockQuote> tested = null;
+            try
+            {
+                csvContext = new StockCsvContext(outputFile) { Culture = CultureInfo.InvariantCulture };
+                repository = new CsvRepo<StockQuote>(csvContext);
+                tested = new CsvUnitOfWork<StockQuote>(csvContext);
+
+                // Act
+
+                tested.Repo.AddRange(company.Quotes);
+                tested.Dispose();
+
+                string received = null;
+                if (File.Exists(outputFile.FullName))
+                {
+                    received = File.ReadAllText(outputFile.FullName);
+                }
+
+                // Assert
+
+                var actual = received?.Split(Environment.NewLine)?.Length;
+                Assert.True(!actual.HasValue || actual.Value == 0);
+            }
+            finally
+            {
+                tested?.Dispose();
+                repository?.Dispose();
+                outputFile.Delete();
+            }
+        }
     }
 }
